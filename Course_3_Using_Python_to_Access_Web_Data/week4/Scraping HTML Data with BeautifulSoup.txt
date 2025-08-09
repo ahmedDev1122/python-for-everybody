@@ -1,0 +1,47 @@
+'''
+Scraping Numbers from HTML using BeautifulSoup
+In this assignment you will write a Python program
+similar to http://www.pythonlearn.com/code/urllink2.py.
+The program will use urllib to read the HTML from the data files below,
+and parse the data, extracting numbers and compute the
+sum of the numbers in the file.
+
+We provide two files for this assignment.
+One is a sample file where we give you the sum for your testing and
+the other is the actual data you need to process for the assignment.
+
+Sample data: http://python-data.dr-chuck.net/comments_42.html (Sum=2553)
+Actual data: http://python-data.dr-chuck.net/comments_353539.html (Sum ends with 63)
+You do not need to save these files to your folder since your program
+will read the data directly from the URL. Note: Each student will have a
+distinct data url for the assignment - so only use your own data url for analysis.
+'''
+
+import urllib.request
+from bs4 import BeautifulSoup
+
+# Ask user to enter the URL
+url = input("Enter URL: ")
+
+# Open the URL and read the HTML content
+html = urllib.request.urlopen(url).read()
+
+# Use BeautifulSoup to parse the HTML
+soup = BeautifulSoup(html, "html.parser")
+
+# Find all the span tags in the page
+tags = soup.find_all("span")
+
+# Set counters for total and count
+total = 0
+count = 0
+
+# Loop through each span tag and extract the number
+for tag in tags:
+    number = int(tag.text)
+    total += number
+    count += 1
+
+# Print total numbers found and their sum
+print("Count", count)
+print("Sum", total)
